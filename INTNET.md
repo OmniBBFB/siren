@@ -6,7 +6,7 @@
 
 ## 已收敛的需求
 
-- lazy.nvim 可加载本地插件；Neovim 0.11+，本机 Kitty，Node 20+。
+- 默认通过 lazy.nvim 从 OmniBBFB/siren Git 仓库安装，build 自动安装锁定依赖；本地 dir 模式仅用于开发。Neovim 0.11+，本机 Kitty，Node 20+。
 - 同时提供行内与浮窗；保留源码，默认手动启用，启用后自动刷新。
 - 范围为当前代码块、全文、与选区相交的完整代码块。
 - 快捷键由插件 setup({ keymaps = ... }) 统一配置并注册，仅作用于 Markdown；手动请求零匹配需提示。

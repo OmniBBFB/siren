@@ -1,6 +1,5 @@
 return {
-  dir = vim.fn.expand("~/app/siren"),
-  name = "siren.md",
+  "OmniBBFB/siren",
   main = "siren",
   ft = "markdown",
   build = "npm ci --ignore-scripts",

@@ -1,5 +1,9 @@
 # siren.md specification
 
+## Installation
+
+Default lazy.nvim spec uses "OmniBBFB/siren", main="siren", ft="markdown" and build="npm ci --ignore-scripts". Lazy manages checkout and updates; runtime paths derive from the installed plugin, including plugin.dir for optional Snacks query integration. Local dir is an explicit development override.
+
 ## Contract
 
 Lua API: setup(opts), render(scope), float(), clear(), disable(), status().

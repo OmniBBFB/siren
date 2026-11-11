@@ -3,22 +3,18 @@
 在 Neovim Markdown 中保留 Mermaid 源码，使用 Pele → SVG → PNG 预览。
 支持原生 Kitty 行内/浮窗，以及可选 Snacks 图片链接后端。
 
-## 本机安装（lazy.nvim）
+## 安装（lazy.nvim / Git）
 
 依赖：Neovim 0.11+、Node 20+、本机 Kitty、可用中文字体。
 Markdown Tree-sitter parser 可选；缺少时自动扫描围栏。无需 Mermaid parser、Chromium、mmdc 或 ImageMagick。
 
-将 examples/lazy.lua 的内容放入 Neovim 的 lua/plugins/siren.lua。
-插件目录执行：
-
-```sh
-npm ci --ignore-scripts
-```
+将以下配置或 examples/lazy.lua 放入 Neovim 的 lua/plugins/siren.lua。
+lazy.nvim 会从 [OmniBBFB/siren](https://github.com/OmniBBFB/siren) 克隆仓库，并通过 `build` 自动运行 `npm ci --ignore-scripts` 安装锁定的渲染依赖，无需手动克隆到 ~/app。
+保存配置并重启 Neovim；首次安装也可执行 `:Lazy install siren`。
 
 ```lua
-{
-  dir = vim.fn.expand("~/app/siren"),
-  name = "siren.md",
+return {
+  "OmniBBFB/siren",
   main = "siren",
   ft = "markdown",
   build = "npm ci --ignore-scripts",
@@ -100,7 +96,7 @@ keymaps = {
 旧来源保留在 metadata；无法无歧义识别外部 mv 和复制。项目图片不参与全局缓存清理，避免误删已链接的资产。
 
 Snacks 自带 Mermaid 捕获需要关闭，普通图片捕获保留。本插件不修改全局 Tree-sitter 查询。
-本机配置提供了仅移除 Mermaid 捕获的显式集成，示例在 examples/snacks-query.lua；保留普通图片与公式查询。生成图片的显示宽度会扣除行号/符号栏，按最窄窗口缩放。
+仅移除 Mermaid 捕获的集成示例在 examples/snacks-query.lua；保留普通图片与公式查询。Git 安装时，通过 lazy 的 `init = function(plugin)` 获取 `plugin.dir`，使用 `dofile(plugin.dir .. "/examples/snacks-query.lua")` 加载该示例，不依赖开发目录。生成图片的显示宽度会扣除行号/符号栏，按最窄窗口缩放。
 
 ## 测试
 
@@ -119,8 +115,8 @@ nvim --headless -u NONE -i NONE -l tests/trigger.lua
 内置围栏扫描支持最多3格缩进、反引号/波浪线，深层列表与引用使用 Tree-sitter。
 Pele 语法和布局以当前锁定版本为准；公式、外部图片、自动资产打包与跨机器文档 UUID 不在初版范围。
 
-## 名称迁移
+## 本地开发与旧版本迁移
 
-项目目录为 ~/app/siren，Lua 模块为 siren，命令为 :Siren 和 :SirenPrune。
+默认安装由 lazy.nvim 管理，目录为 stdpath("data")/lazy/siren。如需本地开发，可克隆到 ~/app/siren，再把仓库字符串替换为 `dir = vim.fn.expand("~/app/siren")`。Lua 模块为 siren，命令为 :Siren 和 :SirenPrune。
 旧版托管链接标记仍可识别；重新渲染会写入新标记与 .siren/ 路径。已有项目旁的旧图片保留，不自动删除。
-本机原全局缓存已在新缓存目录不存在时迁移至 stdpath("cache")/siren。运行中的旧 Neovim 会话需要重启。
+全局缓存位于 stdpath("cache")/siren。更新配置或迁移安装目录后，重启 Neovim 以加载新路径。

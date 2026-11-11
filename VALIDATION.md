@@ -36,3 +36,9 @@
 - tests/trigger-desktop.py：本机完整配置，使用 ~/outputs/xxx.md 的独立副本，标签固定为 Mermaid。实际发送 <Space>ma 和 :Siren all 均成功。
 - 图片虚拟行从修复前 fill=0 变为 fill=24；已查看 .test-output/xxx-mermaid-trigger.png 确认真实像素图可见。
 - 不修改用户正在编辑的 ~/outputs/xxx.md；副本和验收 JSON 在 .test-output/。
+
+## Git 安装验收
+
+默认仓库为 OmniBBFB/siren。本机执行 `:Lazy install siren`，成功克隆至 ~/.local/share/nvim/lazy/siren 并自动运行 npm ci --ignore-scripts。安装提交为 b4c68d58f999a9a14e8d2579c5961042fd6a9c76。
+
+`tests/local-config.lua` 已检查 Git spec、lazy 托管路径、实际加载的 runtime root、Pele 依赖、命令和快捷键、Snacks 普通图片共存，以及从安装目录实际生成两张 Mermaid 图片，全部通过。结果在 .test-output/local-config.json。开发目录 ~/app/siren 不再是默认运行依赖。
